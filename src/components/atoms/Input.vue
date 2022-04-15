@@ -2,7 +2,8 @@
   <div
     :class="{
       [$style.root]: true,
-      [$style.filledOrFocused]: computedFilledOrFocused
+      [$style.filledOrFocused]: computedFilledOrFocused,
+      [classname ? `${classname}`: '']: true,
     }"
   >
     <div :class="$style.placeholder">
@@ -28,8 +29,6 @@ import {
   Watch,
 } from 'vue-property-decorator';
 
-const DEFAULT_PLACEHOLDER = 'default placeholder';
-
 @Component({
   mounted() {
     this.stateValue = this.value;
@@ -39,6 +38,8 @@ export default class Input extends Vue {
   private stateValue:string = '';
 
   private focused:boolean = false;
+
+  @Prop({ default: '' }) classname!: string;
 
   @Prop({ default: '' }) value!: string;
 
@@ -73,7 +74,7 @@ export default class Input extends Vue {
   }
 
   get computedPlaceholder():string {
-    const test = this.placeholder || DEFAULT_PLACEHOLDER;
+    const test = this.placeholder || 'default placeholder';
     return test;
     // return 'fff';
   }
